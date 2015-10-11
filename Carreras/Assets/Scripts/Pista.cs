@@ -57,4 +57,52 @@ public class Pista : MonoBehaviour {
 
 		return ultimaSeccion;
 	}
+
+	public void BorrarUltimaSeccion(){
+		SeccionPista ultimaSeccion = ObtenerUltimaSeccion();
+		if( ultimaSeccion == null || ultimaSeccion == seccionInicial ) {
+			return;
+		}
+		if( ultimaSeccion == seccionInicial ) {
+			ultimaSeccion.transform.Rotate( new Vector3( 0f, 90f, 0f ) );
+		}
+
+		if( ultimaSeccion.vecino1 != null ) {
+			ultimaSeccion.EliminarVecino( ultimaSeccion.vecino1 );
+			Destroy( ultimaSeccion.gameObject );
+		}
+		else {
+			ultimaSeccion.EliminarVecino( ultimaSeccion.vecino2 );
+			Destroy( ultimaSeccion.gameObject );
+		}
+	}
+
+	public bool RotarUltimaSeccion(){
+		SeccionPista ultimaSeccion = ObtenerUltimaSeccion();
+		if( ultimaSeccion == null ) {
+			return false;
+		}
+		if( ultimaSeccion == seccionInicial ) {
+			ultimaSeccion.transform.Rotate( new Vector3( 0f, 90f, 0f ) );
+		}
+		else {
+			if( ultimaSeccion.vecino1 != null ) {
+				SeccionPista vecino = ultimaSeccion.vecino1;
+				Transform enlaceVecino = vecino.vecino1 == ultimaSeccion ? vecino.enlace1 : vecino.enlace2;
+				ultimaSeccion.EliminarVecino( vecino );
+				ultimaSeccion.HacerVecino2( vecino, enlaceVecino ); 
+
+				//TODO: validar que esto es posible
+			}
+			else {
+				SeccionPista vecino = ultimaSeccion.vecino2;
+				Transform enlaceVecino = vecino.vecino1 == ultimaSeccion ? vecino.enlace1 : vecino.enlace2;
+				ultimaSeccion.EliminarVecino( vecino );
+				ultimaSeccion.HacerVecino1( vecino, enlaceVecino ); 
+
+				//TODO: validar que esto es posible
+			}
+		}
+		return true;
+	}
 }

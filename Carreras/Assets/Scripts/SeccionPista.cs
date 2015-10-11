@@ -35,7 +35,7 @@ public class SeccionPista : MonoBehaviour {
 		HacerVecino( enlace2, nuevoVecino, enlaceVecino );
 	}
 
-	private void EliminarVecino( SeccionPista vecino ) {
+	public void EliminarVecino( SeccionPista vecino ) {
 		if( vecino.vecino1 == this ) {
 			vecino.vecino1 = null;
 		}

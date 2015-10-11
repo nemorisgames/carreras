@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EditorTest : MonoBehaviour {
+public class EscenaEditor : MonoBehaviour {
 
 	public SeccionPista prefabSeccion1;
 	public SeccionPista prefabSeccion2;
@@ -15,6 +15,14 @@ public class EditorTest : MonoBehaviour {
 
 		if( Input.GetKeyDown( KeyCode.Keypad2 ) ) {
 			AgregarSeccion( prefabSeccion2 );
+		}
+
+		if( Input.GetKeyDown( KeyCode.R ) ) {
+			pista.RotarUltimaSeccion();
+		}
+
+		if( Input.GetKeyDown( KeyCode.D ) ) {
+			pista.BorrarUltimaSeccion();
 		}
 	
 	}
