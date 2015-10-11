@@ -40,6 +40,8 @@ public class AutomovilV2 : MonoBehaviour {
 	}
 
 	void retroceder(float multiplicador){
+		if (velocidadMaxima < rigidbody.velocity.sqrMagnitude)
+			return;
 		rigidbody.AddForce (new Vector3(transform.forward.x, 0f, transform.forward.z) * multiplicador * -aceleracion);
 	}
 
