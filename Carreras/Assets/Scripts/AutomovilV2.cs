@@ -3,11 +3,16 @@ using System.Collections;
 
 public class AutomovilV2 : MonoBehaviour {
 	public Rigidbody rigidbody;
+	public float rigidbodyMass;
+	public float rigidbodyDrag;
+	public float rigidbodyAngularDrag;
 	public Transform centroGravedad;
 	public float aceleracion = 10f;
 	public float giro = 3f;
 	public float friccion = 10f;
 	public float multiplicadorDanio = 5f;
+	public float velocidadMaxima;
+	public float velocidadAngularMaxima;
 	public IntegridadParte parteDelanteraIzq;
 	public IntegridadParte parteDelanteraDer;
 	public IntegridadParte parteTraseraIzq;
@@ -17,6 +22,10 @@ public class AutomovilV2 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rigidbody.centerOfMass = centroGravedad.localPosition;
+		rigidbody.mass = rigidbodyMass;
+		rigidbody.drag = rigidbodyDrag;
+		rigidbody.angularDrag = rigidbodyAngularDrag;
+		rigidbody.maxAngularVelocity = velocidadAngularMaxima;
 		parteDelanteraIzq.particulas.Stop(true);
 		parteDelanteraDer.particulas.Stop(true);
 		parteTraseraIzq.particulas.Stop(true);
@@ -24,6 +33,8 @@ public class AutomovilV2 : MonoBehaviour {
 	}
 	
 	public void acelerar(float multiplicador){
+		if (velocidadMaxima < rigidbody.velocity.sqrMagnitude)
+			return;
 		test.y = multiplicador;
 		rigidbody.AddForce (new Vector3(transform.forward.x, 0f, transform.forward.z) * multiplicador * aceleracion * Mathf.Clamp((parteTraseraIzq.integridad + parteTraseraDer.integridad) / 200f, 0.5f, 1f));
 	}
@@ -105,7 +116,7 @@ public class AutomovilV2 : MonoBehaviour {
 
 	public void girar(float multiplicador){
 		test.x = multiplicador;
-		rigidbody.AddTorque(0f, multiplicador * giro * Mathf.Clamp(parteDelanteraIzq.integridad / 100f + 0.5f, 0.2f, 1f), 0f);
+		rigidbody.AddRelativeTorque(0f, multiplicador * giro * Mathf.Clamp(parteDelanteraIzq.integridad / 100f + 0.5f, 0.2f, 1f), 0f);
 	}
 
 	void OnGUI(){
@@ -114,6 +125,7 @@ public class AutomovilV2 : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		//print (rigidbody.velocity.magnitude + " " + rigidbody.angularVelocity.magnitude);
 		if (!IsGrounded ())
 			return;
 		if (Input.GetKey (KeyCode.A)) {
