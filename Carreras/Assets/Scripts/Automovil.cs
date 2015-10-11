@@ -80,7 +80,7 @@ public class Automovil : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter(Collision collision){
+	/*void OnCollisionEnter(Collision collision){
 		if (collision.gameObject.CompareTag ("Obstaculo")) {
 			foreach(ContactPoint c in collision.contacts){
 				switch(c.thisCollider.name){
@@ -100,7 +100,7 @@ public class Automovil : MonoBehaviour {
 			}
 
 		}
-	}
+	}*/
 	
 	// Update is called once per frame
 	void FixedUpdate () {
