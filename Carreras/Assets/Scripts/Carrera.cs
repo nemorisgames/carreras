@@ -35,6 +35,7 @@ public class Carrera : MonoBehaviour {
 		}
 		else{
 			pista = Instantiate<Pista>( Resources.Load<Pista>( "Pistas/pista1" ) );
+			pista.transform.position = Vector3.zero;
 		}
 		
 		if( pista != null ) {
@@ -42,6 +43,9 @@ public class Carrera : MonoBehaviour {
 		}
 
 		auto = Instantiate<AutomovilV2>( Resources.Load<AutomovilV2>( "Autos/auto" ) );
+
+		auto.transform.position = pista.posicionInicialAuto.position;
+		auto.transform.rotation = pista.posicionInicialAuto.rotation;
 
 		labelVuelta.text = numeroVueltaActual + "/" + maxNumeroDeVuelta;
 		StartCoroutine( InicioDeCarreraRutina() );

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class Pista : MonoBehaviour {
 
+	public Transform posicionInicialAuto;
+
+
+	[HideInInspector]
 	public SeccionPista seccionInicial;
 	public System.Action<TipoCheckpoint> accionCheckPointAlcanzado;
 
