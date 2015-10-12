@@ -1,19 +1,26 @@
 fileFormatVersion: 2
-guid: 7eb99efb75ed5f34390489d2ad3fd306
-timeCreated: 1444584457
+guid: 1b89c2f6b35baba42bb01689b1f30cb9
+timeCreated: 1444644764
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Group1
+    100000: Group1
+    100002: Group2
     100004: Mesh1
-    400000: //RootNode
-    400002: Group1
+    100006: Mesh2
+    100008: //RootNode
+    400000: Group1
+    400002: Group2
     400004: Mesh1
+    400006: Mesh2
+    400008: //RootNode
     2300000: Mesh1
+    2300002: Mesh2
     3300000: Mesh1
+    3300002: Mesh2
     4300000: Mesh1
+    4300002: Mesh2
   materials:
     importMaterials: 1
     materialName: 0
