@@ -38,6 +38,7 @@ public class AutomovilV2 : MonoBehaviour {
 			return;
 		test.y = multiplicador;
 		if(multiplicador > 0f) tiempoSinInput = 0f;
+		rigidbody.AddForce ( transform.forward * multiplicador * aceleracion * Mathf.Clamp((parteTraseraIzq.integridad + parteTraseraDer.integridad) / 200f, 0.5f, 1f));
 	}
 
 	void retroceder(float multiplicador){
