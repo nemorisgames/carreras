@@ -46,6 +46,7 @@ public class Carrera : MonoBehaviour {
 
 		auto.transform.position = pista.posicionInicialAuto.position;
 		auto.transform.rotation = pista.posicionInicialAuto.rotation;
+		auto.enabled = false;
 
 		labelVuelta.text = numeroVueltaActual + "/" + maxNumeroDeVuelta;
 		StartCoroutine( InicioDeCarreraRutina() );
@@ -67,6 +68,7 @@ public class Carrera : MonoBehaviour {
 		LabelPartida.text = "Partida!";
 		tiempoPartida = Time.time;
 		estado = Estado.Activo;
+		auto.enabled = true;
 		yield return new WaitForSeconds( 1f );
 		LabelPartida.gameObject.SetActive( false );
 		yield return null;
