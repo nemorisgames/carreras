@@ -11,7 +11,7 @@ public class Central : MonoBehaviour {
 	float angulo = 0f;
 	// Use this for initialization
 	void Start () {
-	
+		automovilV2 = FindObjectOfType<AutomovilV2>();
 	}
 
 	public void reset(){

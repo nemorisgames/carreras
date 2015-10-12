@@ -9,11 +9,13 @@ public class Carrera : MonoBehaviour {
 		Fin
 	}
 
+	public UILabel LabelPartida;
 	public UILabel labelVuelta;
 	public UILabel labelCronometro;
 
 	public static Pista prefabPista;
 	private Pista pista;
+	private AutomovilV2 auto;
 
 	private int numeroVueltaActual = 0;
 	public int maxNumeroDeVuelta = 5;
@@ -25,29 +27,44 @@ public class Carrera : MonoBehaviour {
 	private TipoCheckpoint ultimoCheckpoint = TipoCheckpoint.Inicial;
 
 
-	void Start() {
-		pista = FindObjectOfType<Pista>();
-		if( pista == null ) {
-			if( prefabPista != null ) {
-				pista = Instantiate<Pista>( prefabPista );
-				pista.transform.position = Vector3.zero;
-			}
-			else{
-				//TODO: load default?
-			}
-		}
+	void Awake() {
 
+		if( prefabPista != null ) {
+			pista = Instantiate<Pista>( prefabPista );
+			pista.transform.position = Vector3.zero;
+		}
+		else{
+			pista = Instantiate<Pista>( Resources.Load<Pista>( "Pistas/pista1" ) );
+		}
+		
 		if( pista != null ) {
 			pista.accionCheckPointAlcanzado = CheckpointAlcanzado;
 		}
+
+		auto = Instantiate<AutomovilV2>( Resources.Load<AutomovilV2>( "Autos/auto" ) );
+
 		labelVuelta.text = numeroVueltaActual + "/" + maxNumeroDeVuelta;
 		StartCoroutine( InicioDeCarreraRutina() );
+
+		LabelPartida.gameObject.SetActive( false );
 	}
 
 	private IEnumerator InicioDeCarreraRutina(){
 		//TODO: animacion o algo asi?
+
+		yield return new WaitForSeconds( 2f );
+		LabelPartida.gameObject.SetActive( true );
+		LabelPartida.text = "3";
+		yield return new WaitForSeconds( 1f );
+		LabelPartida.text = "2";
+		yield return new WaitForSeconds( 1f );
+		LabelPartida.text = "1";
+		yield return new WaitForSeconds( 1f );
+		LabelPartida.text = "Partida!";
 		tiempoPartida = Time.time;
 		estado = Estado.Activo;
+		yield return new WaitForSeconds( 1f );
+		LabelPartida.gameObject.SetActive( false );
 		yield return null;
 	}
 
@@ -109,7 +126,8 @@ public class Carrera : MonoBehaviour {
 		estado = Estado.Fin;
 		tiempoFinal = Time.time;
 		RefrescarCronometro();
-		//TODO: animacion o algo asi?
+		yield return new WaitForSeconds( 3f );
+		Application.LoadLevel( "EscenaTitulo" );
 		yield return null;
 	}
 }

@@ -8,7 +8,7 @@ public class Camara : MonoBehaviour {
 	public Vector3 offset;
 	// Use this for initialization
 	void Start () {
-
+		objetivo = FindObjectOfType<AutomovilV2>().transform;
 	}
 	
 	// Update is called once per frame

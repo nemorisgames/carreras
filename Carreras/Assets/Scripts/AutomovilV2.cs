@@ -99,7 +99,8 @@ public class AutomovilV2 : MonoBehaviour {
 				p.particulas.Stop (true);
 			}
 		}
-		p.sprite.color = new Color(1f, p.integridad / 100f, p.integridad / 100f);
+		//TODO: hay que tener un evento para esto que informe a UI
+		//p.sprite.color = new Color(1f, p.integridad / 100f, p.integridad / 100f);
 
 	}
 
