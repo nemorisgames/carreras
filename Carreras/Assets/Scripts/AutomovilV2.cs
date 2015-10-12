@@ -38,13 +38,12 @@ public class AutomovilV2 : MonoBehaviour {
 			return;
 		test.y = multiplicador;
 		if(multiplicador > 0f) tiempoSinInput = 0f;
-		rigidbody.AddForce (new Vector3(transform.forward.x, 0f, transform.forward.z) * multiplicador * aceleracion * Mathf.Clamp((parteTraseraIzq.integridad + parteTraseraDer.integridad) / 200f, 0.5f, 1f));
 	}
 
 	void retroceder(float multiplicador){
 		if (velocidadMaxima < rigidbody.velocity.sqrMagnitude)
 			return;
-		rigidbody.AddForce (new Vector3(transform.forward.x, 0f, transform.forward.z) * multiplicador * -aceleracion);
+		rigidbody.AddForce ( transform.forward * multiplicador * -aceleracion);
 	}
 
 	bool IsGrounded(){ 
@@ -120,7 +119,8 @@ public class AutomovilV2 : MonoBehaviour {
 
 	public void girar(float multiplicador){
 		test.x = multiplicador;
-		rigidbody.AddRelativeTorque(0f, multiplicador * giro * Mathf.Clamp(parteDelanteraIzq.integridad / 100f + 0.5f, 0.2f, 1f), 0f);
+		float multiplicadorDireccion = Mathf.Sign( Vector3.Dot( transform.forward, rigidbody.velocity ) );
+		rigidbody.AddRelativeTorque(0f, multiplicadorDireccion * multiplicador * giro * Mathf.Clamp(parteDelanteraIzq.integridad / 100f + 0.5f, 0.2f, 1f), 0f);
 	}
 
 	void OnGUI(){
