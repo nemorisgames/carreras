@@ -3,8 +3,8 @@ using System.Collections;
 
 public class SeccionPista : MonoBehaviour {
 
-	const float  ENLACE_DISTANCIA_GIZMO = 0.3f;
-	const float  ENLACE_RADIO_GIZMO = 0.05f;
+	const float  ENLACE_DISTANCIA_GIZMO = 3f;
+	const float  ENLACE_RADIO_GIZMO = 0.1f;
 
 	public Transform enlace1;
 	public Transform enlace2;
@@ -15,12 +15,12 @@ public class SeccionPista : MonoBehaviour {
 	public SeccionPista vecino2;
 
 	void OnDrawGizmos() {
-		Gizmos.color = Color.red;
+		Gizmos.color = new Color(1f,0,0,0.3f);
 		if( enlace1 != null ) {
 			Gizmos.DrawSphere( enlace1.position, ENLACE_RADIO_GIZMO );
 			Gizmos.DrawRay( enlace1.position, enlace1.forward * ENLACE_DISTANCIA_GIZMO );
 		}
-		Gizmos.color = Color.blue;
+		Gizmos.color = new Color(0,0,1f,0.3f);
 		if( enlace2 != null ) {
 			Gizmos.DrawSphere( enlace2.position, ENLACE_RADIO_GIZMO );
 			Gizmos.DrawRay( enlace2.position, enlace2.forward * ENLACE_DISTANCIA_GIZMO );
