@@ -149,8 +149,8 @@ public class AutomovilV2 : MonoBehaviour {
 		if (Input.GetKey (KeyCode.W)) {
 			acelerar (1.5f);
 		}
-		if (Input.GetKey (KeyCode.S) || (tiempoSinInput > 2f && central.tipoControl == 0)) {
-			retroceder (0.8f);
+		if (Input.GetKey (KeyCode.S) || (tiempoSinInput > 2f && (central.tipoControl == 0 || central.tipoControl == 3))) {
+			retroceder (1f);
 		}
 
 		/*if (Input.touches.Length > 0) {

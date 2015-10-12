@@ -8,6 +8,7 @@ public class Central : MonoBehaviour {
 	Vector2 deltaPos1;
 	Vector2 deltaPos2;
 	public int tipoControl = 0;
+	float angulo = 0f;
 	// Use this for initialization
 	void Start () {
 	
@@ -28,6 +29,10 @@ public class Central : MonoBehaviour {
 	public void cargarEscena3(){
 		Application.LoadLevel ("Escena3");
 	}
+	
+	public void cargarEscena4(){
+		Application.LoadLevel ("Escena4");
+	}
 
 	public void repeatButtonPress(string tipo){
 		switch (tipo) {
@@ -47,7 +52,7 @@ public class Central : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		//GUI.Box (new Rect (0, 0, 300, 100), deltaPos1 + " " + deltaPos2);
+		GUI.Box (new Rect (0, 0, 300, 100), angulo + " " + (Mathf.Clamp((angulo) / 60f, -2f, 2f)));
 		if (tipoControl == 1) {
 			/*if(GUI.RepeatButton(new Rect(50, Screen.height - 100, 50, 50), "<")){
 				automovilV2.girar (-1f);//Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
@@ -121,6 +126,40 @@ public class Central : MonoBehaviour {
 			}
 			automovilV2.girar (1f * Mathf.Clamp(deltaPos2.x, -60f, 60f) / 60f);//Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
 			automovilV2.acelerar (1.5f * Mathf.Clamp(deltaPos2.y, -30f, 60f) / 60f); //Mathf.Clamp(deltaPos2.y, -60f, 60f) / 60f);
+		}
+		if(tipoControl == 3){
+			bool toqueDerecho = false;
+			//bool toqueIzquierdo = false;
+			if (Input.touches.Length > 0) {
+				foreach (Touch t in Input.touches) {
+					//if (t.position.x < Screen.width / 2f) {
+						/*	if (deltaPos1 == Vector2.zero)
+							manubrio.transform.localPosition = new Vector3 (t.position.x - Screen.width / 2f, t.position.y - Screen.height / 2f, 0f);
+						deltaPos1 += t.deltaPosition;
+						toqueIzquierdo = true;*/
+					//} else {
+						if(deltaPos2 == Vector2.zero)
+							aceleracion.transform.localPosition = new Vector3(t.position.x - Screen.width / 2f, t.position.y - Screen.height / 2f, 0f);
+						deltaPos2 += t.deltaPosition;
+						toqueDerecho = true;
+					//}
+				}
+				//if (!toqueIzquierdo)
+				//	deltaPos1 = Vector2.zero;
+				if (!toqueDerecho)
+					deltaPos2 = Vector2.zero;
+			} else {
+				//deltaPos1 = Vector2.zero;
+				deltaPos2 = Vector2.zero;
+			}
+			//automovilV2.girar (1f * Mathf.Clamp(deltaPos2.x, -60f, 60f) / 60f);//Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
+			//automovilV2.acelerar (1.5f * Mathf.Clamp(deltaPos2.y, -30f, 60f) / 60f); //Mathf.Clamp(deltaPos2.y, -60f, 60f) / 60f);
+			if(toqueDerecho){ 
+				automovilV2.acelerar (1.5f * Mathf.Clamp(deltaPos2.sqrMagnitude / 60f, 0f, 1f));
+				int sign = Vector3.Cross(automovilV2.transform.forward, new Vector3(deltaPos2.x, 0f, deltaPos2.y)).y < 0 ? -1 : 1;
+				angulo = (sign * Vector3.Angle(automovilV2.transform.forward, new Vector3(deltaPos2.x, 0f, deltaPos2.y)));
+				automovilV2.girar (Mathf.Clamp((angulo) / 60f, -2f, 2f));//Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
+			}
 		}
 	}
 }
