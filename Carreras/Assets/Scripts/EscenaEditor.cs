@@ -8,6 +8,9 @@ public class EscenaEditor : MonoBehaviour {
 	public SeccionPista prefabSeccion1;
 	public SeccionPista prefabSeccion2;
 
+	public UIGrid prefabsLista;
+	public Transform prefabBotton;
+
 	public Pista pista;
 
 	public Camera camaraEscena;
@@ -15,6 +18,16 @@ public class EscenaEditor : MonoBehaviour {
 	void Start () {
 		camaraEscena.transform.position = new Vector3( 0, camaraEscena.transform.position.y, 0 );
 		AgregarSeccion( initialPrefab );
+
+		SeccionPista[] prefabs = Resources.LoadAll<SeccionPista>( "SeccionesPista" );
+		foreach( SeccionPista prefab in prefabs ) {
+			Transform instanciaBoton = Instantiate<Transform>( prefabBotton );
+			prefabsLista.AddChild( instanciaBoton );
+			BotonSeccionPista botonSeccionPista = instanciaBoton.GetComponent<BotonSeccionPista>();
+			botonSeccionPista.Configurar( prefab, TapSeccionNueva );
+			instanciaBoton.localScale = Vector3.one;
+			instanciaBoton.localPosition = Vector3.zero;
+		}
 	}
 
 	void Update () {
@@ -24,19 +37,22 @@ public class EscenaEditor : MonoBehaviour {
 
 		if( Input.GetKeyDown( KeyCode.Keypad2 ) ) {
 			MoveCamera( AgregarSeccion( prefabSeccion2 ) );
-		}
+		}	
+	}
 
-		if( Input.GetKeyDown( KeyCode.R ) ) {
-			pista.RotarUltimaSeccion();
-		}
+	public void RotarUltimaSeccion() {
+		pista.RotarUltimaSeccion();
+	}
 
-		if( Input.GetKeyDown( KeyCode.D ) ) {
-			pista.BorrarUltimaSeccion();
-			contadorSecciones--;
-			SeccionPista ultimaSeccion = pista.ObtenerUltimaSeccion();
-			MoveCamera( ultimaSeccion == null ? Vector3.zero : ultimaSeccion.transform.position );
-		}
-	
+	public void BorrarUltimaSeccion() {
+		pista.BorrarUltimaSeccion();
+		contadorSecciones--;
+		SeccionPista ultimaSeccion = pista.ObtenerUltimaSeccion();
+		MoveCamera( ultimaSeccion == null ? Vector3.zero : ultimaSeccion.transform.position );
+	}
+
+	void TapSeccionNueva ( SeccionPista prefabSeccion ) {
+		MoveCamera( AgregarSeccion( prefabSeccion ) );
 	}
 
 	int contadorSecciones = 0;
