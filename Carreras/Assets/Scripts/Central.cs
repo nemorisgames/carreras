@@ -34,19 +34,19 @@ public class Central : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		bool toqueDerecho = false;
+		bool toqueIzquierdo = false;
 		if (Input.touches.Length > 0) {
-			bool toqueDerecho = false;
-			bool toqueIzquierdo = false;
 			foreach (Touch t in Input.touches) {
 				if (t.position.x < Screen.width / 2f) {
 					if(deltaPos1 == Vector2.zero)
-						manubrio.transform.localPosition = new Vector3(t.position.x, t.position.y, 0f);
+						manubrio.transform.localPosition = new Vector3(t.position.x - Screen.width / 2f, t.position.y - Screen.height / 2f, 0f);
 					deltaPos1 += t.deltaPosition;
 					toqueIzquierdo = true;
 				} else {
-					if(deltaPos2 == Vector2.zero)
-						aceleracion.transform.localPosition = new Vector3(t.position.x, t.position.y, 0f);
-					deltaPos2 += t.deltaPosition;
+					//if(deltaPos2 == Vector2.zero)
+					//	aceleracion.transform.localPosition = new Vector3(t.position.x - Screen.width / 2f, t.position.y - Screen.height / 2f, 0f);
+					//deltaPos2 += t.deltaPosition;
 					toqueDerecho = true;
 				}
 			}
@@ -58,7 +58,7 @@ public class Central : MonoBehaviour {
 			deltaPos1 = Vector2.zero;
 			deltaPos2 = Vector2.zero;
 		}
-		automovilV2.girar (1f * Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
-		automovilV2.acelerar (1.9f * Mathf.Clamp(deltaPos2.y, -30f, 30f) / 30f);
+		automovilV2.girar (1f * (deltaPos1.x != 0f?(deltaPos1.x<0f?-1f:1f):0f));//Mathf.Clamp(deltaPos1.x, -30f, 30f) / 30f);
+		automovilV2.acelerar (1.5f * (toqueDerecho ? 1f : 0f)); //Mathf.Clamp(deltaPos2.y, -60f, 60f) / 60f);
 	}
 }

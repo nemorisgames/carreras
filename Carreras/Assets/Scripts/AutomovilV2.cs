@@ -19,6 +19,7 @@ public class AutomovilV2 : MonoBehaviour {
 	public IntegridadParte parteTraseraDer;
 	bool reparando = false;
 	Vector2 test;
+	public float tiempoSinInput = 0f;
 	// Use this for initialization
 	void Start () {
 		rigidbody.centerOfMass = centroGravedad.localPosition;
@@ -36,6 +37,7 @@ public class AutomovilV2 : MonoBehaviour {
 		if (velocidadMaxima < rigidbody.velocity.sqrMagnitude)
 			return;
 		test.y = multiplicador;
+		if(multiplicador > 0f) tiempoSinInput = 0f;
 		rigidbody.AddForce (new Vector3(transform.forward.x, 0f, transform.forward.z) * multiplicador * aceleracion * Mathf.Clamp((parteTraseraIzq.integridad + parteTraseraDer.integridad) / 200f, 0.5f, 1f));
 	}
 
@@ -130,6 +132,9 @@ public class AutomovilV2 : MonoBehaviour {
 		//print (rigidbody.velocity.magnitude + " " + rigidbody.angularVelocity.magnitude);
 		if (!IsGrounded ())
 			return;
+
+		tiempoSinInput += Time.deltaTime;
+
 		if (Input.GetKey (KeyCode.A)) {
 			//acelerar (1f);
 			girar(-1f);
@@ -141,8 +146,8 @@ public class AutomovilV2 : MonoBehaviour {
 		if (Input.GetKey (KeyCode.W)) {
 			acelerar (1.5f);
 		}
-		if (Input.GetKey (KeyCode.S)) {
-			retroceder (1.5f);
+		if (Input.GetKey (KeyCode.S) || tiempoSinInput > 2f) {
+			retroceder (1f);
 		}
 
 		/*if (Input.touches.Length > 0) {
