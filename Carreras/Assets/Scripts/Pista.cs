@@ -63,9 +63,6 @@ public class Pista : MonoBehaviour {
 		if( ultimaSeccion == null || ultimaSeccion == seccionInicial ) {
 			return;
 		}
-		if( ultimaSeccion == seccionInicial ) {
-			ultimaSeccion.transform.Rotate( new Vector3( 0f, 90f, 0f ) );
-		}
 
 		if( ultimaSeccion.vecino1 != null ) {
 			ultimaSeccion.EliminarVecino( ultimaSeccion.vecino1 );
