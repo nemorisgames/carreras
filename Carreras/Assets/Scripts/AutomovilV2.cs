@@ -31,6 +31,11 @@ public class AutomovilV2 : MonoBehaviour {
 		parteDelanteraDer.particulas.Stop(true);
 		parteTraseraIzq.particulas.Stop(true);
 		parteTraseraDer.particulas.Stop(true);
+
+		ReferenciaAuto[] referenciasAuto = GetComponentsInChildren<ReferenciaAuto>();
+		foreach( ReferenciaAuto referenciaAuto in referenciasAuto ) {
+			referenciaAuto.automovil = this;
+		}
 	}
 	
 	public void acelerar(float multiplicador){

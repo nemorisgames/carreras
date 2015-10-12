@@ -5,6 +5,14 @@ using System.Collections.Generic;
 public class Pista : MonoBehaviour {
 
 	public SeccionPista seccionInicial;
+	public System.Action<TipoCheckpoint> accionCheckPointAlcanzado;
+
+	void Start() {
+		CheckpointPista[] checkpoints = GetComponentsInChildren<CheckpointPista>();
+		foreach( CheckpointPista checkpoint in checkpoints ) {
+			checkpoint.Configurar( CheckpointAlcanzado );
+		}
+	}
 
 	public bool AgregarSeccion( SeccionPista seccionPista ) {
 		if( seccionPista == null ) {
@@ -101,5 +109,11 @@ public class Pista : MonoBehaviour {
 			}
 		}
 		return true;
+	}
+
+	public void CheckpointAlcanzado( TipoCheckpoint checkpoint ) {
+		if( accionCheckPointAlcanzado != null ) {
+			accionCheckPointAlcanzado( checkpoint );
+		}
 	}
 }
