@@ -166,8 +166,8 @@ public class AutomovilV2 : MonoBehaviour {
 			}
 			retroceso = false;
 		}*/
-
-
-		rigidbody.AddForce (new Vector3(rigidbody.velocity.x, 0f, rigidbody.velocity.z) * - friccion);
+		Vector3 velocidadNormal = Vector3.Dot( transform.right, rigidbody.velocity ) * transform.right;
+		rigidbody.AddForce ( -velocidadNormal * friccion );
+		//rigidbody.AddForce (new Vector3(rigidbody.velocity.x, 0f, rigidbody.velocity.z) * - friccion);
 	}
 }
